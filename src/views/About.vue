@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <p>This is an about page</p>
+    <p>This repo made for implementing any kind of simple app using Quasar framework.</p>
   </q-page>
 </template>
 
