@@ -19,8 +19,8 @@
             no-border	
           >
             <q-list-header>Recent todo lists</q-list-header>
-            <template v-for="(value, index) in todos">
-              <q-item v-if="value.done" :color="positive" :key="index">
+            <template v-for="(value, index) in todoStorage">
+              <q-item v-if="value.done" :key="index">
                 <q-item-side left>
                   <q-btn flat color="secondary" round icon="check_circle" @click="done(value.text, index)"></q-btn>
                 </q-item-side>
@@ -55,30 +55,26 @@ export default {
   name: "PageHome",
   data() {
     return {
-      todo: "",
-      todos: []
+      todo: ""
     };
   },
   methods: {
     submit() {
-      this.todos.push({ text: this.todo, done: false });
-      console.log(this.todos);
+      this.$store.state.todos.push({ text: this.todo, done: false });
+      console.log(this.$store.state.todos);
 
       return (this.todo = "");
     },
     deleteTodo(index) {
-      return this.todos.splice(index, 1);
+      return this.$store.state.todos.splice(index, 1);
     },
     done: function(val, index) {
-      return this.todos[index].done = !this.todos[index].done;
+      return (this.$store.state.todos[index].done = !this.$store.state.todos[index].done);
     }
   },
-  watch: {
-    todos: {
-      handler: function(todos) {
-        console.log(todos);
-      },
-      deep: true
+  computed: {
+    todoStorage() {
+      return this.$store.getters.todoStorage;
     }
   }
 };
