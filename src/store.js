@@ -10,8 +10,14 @@ export default new Vuex.Store({
   mutations: {},
   actions: {},
   getters: {
-    todoStorage(state) {
+    todoAll(state) {
       return state.todos;
+    },
+    todoUndone(state) {
+      return state.todos.filter(todo => !todo.done);
+    },
+    todoDone(state) {
+      return state.todos.filter(todo => todo.done);
     }
   }
 });

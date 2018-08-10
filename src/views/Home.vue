@@ -9,8 +9,8 @@
         toggle-color="primary"
         :options="[
           {label: 'All', value: 'all'},
-          {label: 'Undone', value: 'undone'},
-          {label: 'Done', value: 'done'}
+          {label: 'Done', value: 'done'},
+          {label: 'Undone', value: 'undone'}
         ]"
       />
     </div>
@@ -72,40 +72,38 @@ export default {
   data() {
     return {
       todo: "",
-      filter: null
+      filter: "all"
     };
   },
   methods: {
     submit() {
       this.$store.state.todos.unshift({ text: this.todo, done: false });
-      console.log(this.$store.state.todos);
-
       return (this.todo = "");
     },
     deleteTodo(index) {
       return this.$store.state.todos.splice(index, 1);
     },
-    done: function(val, index) {
-      return (this.$store.state.todos[index].done = !this.$store.state.todos[
-        index
-      ].done);
+    done(val, index) {
+      this.todoStorage[index].done = !this.todoStorage[index].done;
     }
   },
   computed: {
     todoStorage() {
       switch (this.filter) {
         case "all":
-          return this.$store.getters.todoStorage;
-          break;
-
+          return this.$store.getters.todoAll;
         case "done":
-          return this.$store.getters.todoStorage.filter(todo => todo.done == true);
-          break;
-
+          return this.$store.getters.todoDone;
+        case "undone":
+          return this.$store.getters.todoUndone;
         default:
-          return this.$store.getters.todoStorage.filter(todo => todo.done == false);
-          break;
       }
+    }
+  },
+  watch: {
+    todoStorage: {
+      handler: function(val, oldVal) {},
+      deep: true
     }
   }
 };
